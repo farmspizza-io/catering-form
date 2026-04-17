@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Pizzas — Farms' Pizza</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFDF9;
+    --charcoal: #1C1A17;
+    --mid: #5C5649;
+    --muted: #9C9488;
+    --accent: #C8411A;
+    --accent-light: #F5E8E3;
+    --border: #E8E3DB;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  header {
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 600;
+    color: var(--charcoal);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+
+  header p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--mid);
+    max-width: 340px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Grid */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(28,26,23,0.08);
+  }
+
+  .photo-wrap {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: #EDE8E0;
+    position: relative;
+  }
+
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+  }
+
+  .card:hover .photo-wrap img {
+    transform: scale(1.04);
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #EDE8E0;
+  }
+
+  .photo-placeholder svg {
+    opacity: 0.2;
+    width: 48px;
+    height: 48px;
+  }
+
+  .badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  .info {
+    padding: 1rem 1.1rem 1.2rem;
+  }
+
+  .pizza-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 5px;
+  }
+
+  .pizza-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .pizza-price {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem 3rem;
+    border-top: 1px solid var(--border);
+    background: var(--warm-white);
+  }
+
+  footer p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  footer strong {
+    color: var(--charcoal);
+    font-weight: 500;
+  }
+
+  .order-btn {
+    display: inline-block;
+    margin-top: 1.25rem;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 12px 28px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .order-btn:hover { background: #a8340f; }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .info { padding: 0.75rem 0.85rem 0.9rem; }
+    .pizza-name { font-size: 15px; }
+    .pizza-desc { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Farms' Pizza · Roseville, CA</p>
+  <h1>Our Pizzas</h1>
+  <p>Fresh ingredients, crispy crust, made with love.<br>Scan to see what's on the menu.</p>
+</header>
+
+<main>
+  <p class="section-label">Classics</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80" alt="Cheese pizza" loading="lazy">
+      </div>
+      <div class="info">
+        <div class="pizza-name">Cheese</div>
+        <div class="pizza-desc">Classic red sauce, perfectly melted mozzarella, and a dusting of Italian herbs on our signature crispy crust.</div>
+        <div class="pizza-price">From $13.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600&q=80" alt="Pepperoni pizza" loading="lazy">
+        <span class="badge">Fan Fave</span>
+      </div>
+      <div class="info">
+        <div class="pizza-name">Pepperoni</div>
+        <div class="pizza-desc">Loaded with crispy, curled pepperoni over rich red sauce and melted cheese. Every bite is smoky and savory.</div>
+        <div class="pizza-price">From $14.99</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Veggies</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1572453800999-e8d2d1589b7c?w=600&q=80" alt="Farm to Fork pizza" loading="lazy">
+        <span class="badge">Veggie</span>
+      </div>
+      <div class="info">
+        <div class="pizza-name">Farm to Fork</div>
+        <div class="pizza-desc">Red sauce and mozzarella topped with onions, bell peppers, mushrooms, olives, tomatoes, spinach, and aromatic Italian herbs.</div>
+        <div class="pizza-price">From $16.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1592415486689-125cbbfcbee2?w=600&q=80" alt="Garden Party pizza" loading="lazy">
+        <span class="badge">Veggie</span>
+      </div>
+      <div class="info">
+        <div class="pizza-name">Garden Party</div>
+        <div class="pizza-desc">A garden-fresh celebration of vegetables on a crispy crust with melted mozzarella. Bright, light, and full of flavor — proof veggie pizzas don't compromise.</div>
+        <div class="pizza-price">From $16.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1511689660979-10d2b1eccbc3?w=600&q=80" alt="Kickin' Elote pizza" loading="lazy">
+        <span class="badge">Veggie</span>
+      </div>
+      <div class="info">
+        <div class="pizza-name">Kickin' Elote</div>
+        <div class="pizza-desc">Sweet corn, creamy queso, a hint of chili, and a squeeze of lime — everything you love about street corn on a crispy, melty pie. Smoky, tangy, and just a little spicy.</div>
+        <div class="pizza-price">From $16.99</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Specialties</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1604917877934-07d8d248d396?w=600&q=80" alt="Hawaiian pizza" loading="lazy">
+      </div>
+      <div class="info">
+        <div class="pizza-name">Hawaiian</div>
+        <div class="pizza-desc">Melted mozzarella, Canadian bacon, crispy bacon bits, and juicy pineapple — sweet, salty, and satisfying.</div>
+        <div class="pizza-price">From $16.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1595854341625-f33ee10dbf9f?w=600&q=80" alt="BBQ Chicken pizza" loading="lazy">
+      </div>
+      <div class="info">
+        <div class="pizza-name">BBQ Chicken</div>
+        <div class="pizza-desc">Tender chicken, crispy bacon, and red onions on a smoky BBQ base, finished with a sweet tangy BBQ drizzle.</div>
+        <div class="pizza-price">From $17.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=600&q=80" alt="Chicken Bacon Ranch pizza" loading="lazy">
+        <span class="badge">Fan Fave</span>
+      </div>
+      <div class="info">
+        <div class="pizza-name">Chicken Bacon Ranch</div>
+        <div class="pizza-desc">Garlic ranch base with tender chicken, crispy bacon, fresh tomatoes, and shredded provolone. Creamy and irresistible.</div>
+        <div class="pizza-price">From $17.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=80" alt="Buffalo Chicken pizza" loading="lazy">
+        <span class="badge">Spicy</span>
+      </div>
+      <div class="info">
+        <div class="pizza-name">Buffalo Chicken</div>
+        <div class="pizza-desc">Buffalo ranch base loaded with tender chicken and crispy bacon bits, finished with a bold drizzle of buffalo sauce for that perfect spicy, tangy kick.</div>
+        <div class="pizza-price">From $17.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Farms Combo pizza" loading="lazy">
+        <span class="badge">Signature</span>
+      </div>
+      <div class="info">
+        <div class="pizza-name">Farms Combo</div>
+        <div class="pizza-desc">Pepperoni, salami, sausage, beef, onions, bell peppers, mushrooms, and olives — a bold, fully-loaded classic.</div>
+        <div class="pizza-price">From $18.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80" alt="Meatizza pizza" loading="lazy">
+      </div>
+      <div class="info">
+        <div class="pizza-name">Meatizza</div>
+        <div class="pizza-desc">Canadian bacon, crispy bacon bits, pepperoni, salami, and sausage piled high on rich red sauce. Finished with Italian herbs for a bold, carnivore-approved bite.</div>
+        <div class="pizza-price">From $18.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1548340748-6af353c3d4f0?w=600&q=80" alt="Italian Beef pizza" loading="lazy">
+      </div>
+      <div class="info">
+        <div class="pizza-name">Italian Beef</div>
+        <div class="pizza-desc">Tender slow-cooked Italian beef, giardiniera, melted provolone, and rich red sauce on a golden crust. Chicago-style comfort meets pizza perfection.</div>
+        <div class="pizza-price">From $18.99</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1585325701956-60dd9c8553bc?w=600&q=80" alt="Masala Pizza" loading="lazy">
+        <span class="badge">Signature</span>
+      </div>
+      <div class="info">
+        <div class="pizza-name">Masala Pizza</div>
+        <div class="pizza-desc">Bold masala-spiced sauce and melted cheese topped with your choice of juicy chicken tikka or soft paneer. Aromatic, warming, and unlike anything else on the menu.</div>
+        <div class="pizza-price">From $17.99 · Chicken or Paneer (V)</div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Build Your Own</p>
+  <div class="grid">
+
+    <div class="card">
+      <div class="photo-wrap">
+        <img src="https://images.unsplash.com/photo-1548369937-47519962c11a?w=600&q=80" alt="Build your own pizza" loading="lazy">
+      </div>
+      <div class="info">
+        <div class="pizza-name">Build Your Own</div>
+        <div class="pizza-desc">Pick your crust (classic, thin, or gluten-free), choose a sauce — original red, creamy garlic, buffalo ranch, or smoky BBQ — then pile on your toppings.</div>
+        <div class="pizza-price">Starting from $12.99</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p><strong>Farms' Pizza</strong><br>4701 Fiddyment Rd Ste 160, Roseville, CA 95747<br>
+  <a href="tel:9164095092">(916) 409-5092</a></p>
+  <a class="order-btn" href="https://www.farmspizza.com/order">Order Online →</a>
+</footer>
+
+</body>
+</html>
